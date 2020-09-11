@@ -1,0 +1,58 @@
+<div class="container">
+
+  <h1 class="my-5">{{title}}</h1>
+
+  <div class="row mt-5">
+    <div class="col-md-3 col-12">
+      <input type="text" class="form-control my-2" [(ngModel)]="studentName" placeholder="Name">
+    </div>
+    <div class="col-md-3 col-12">
+      <input type="text" class="form-control my-2" [(ngModel)]="studentAge" placeholder="Age">
+    </div>
+    <div class="col-md-3 col-12">
+      <input type="text" class="form-control my-2" [(ngModel)]="studentAddress" placeholder="Address">
+    </div>
+    <div class="col-md-3 col-12">
+      <button type="button" (click)="CreateRecord()" [disabled]="!studentName || !studentAge || !studentAddress"
+        class="btn btn-primary my-2">+ Create Student</button>
+    </div>
+  </div>
+
+
+  <div class="row mt-5">
+    <ng-container *ngFor="let item of students">
+      <div class="col-12 col-md-4">
+        <div class="card my-1">
+          <div class="card-body" *ngIf="!item.isEdit; else elseBlock">
+            <h5 class="card-title">{{item.Name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Age: {{item.Age}} Years</h6>
+            <p class="card-text">Address: {{item.Address}}</p>
+            <a href="#" class="card-link" (click)="EditRecord(item)">Edit</a>
+            <a href="#" class="card-link" (click)="RemoveRecord(item.id)">Delete</a>
+          </div>
+          <ng-template #elseBlock>
+            <div class="card-body">
+              <h5 class="card-title">Edit</h5>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12 m-1">
+                    <input type="text" class="form-control" [(ngModel)]="item.EditName" placeholder="Edit Name">
+                  </div>
+                  <div class="col-md-12 m-1">
+                    <input type="text" class="form-control" [(ngModel)]="item.EditAge" placeholder="Edit Age">
+                  </div>
+                  <div class="col-md-12 m-1">
+                    <input type="text" class="form-control" [(ngModel)]="item.EditAddress" placeholder="Edit Address">
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary mx-2" (click)="item.isEdit = false">Cancel</button>
+              <button class="btn btn-primary mx-2" (click)="UpdateRecord(item)">Update</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
